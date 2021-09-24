@@ -1,0 +1,176 @@
+---
+bibliography: r-references.bib
+csl: apa.csl
+output:
+  word_document:
+    fig_caption: yes
+    reference_docx: apa_style.docx
+---
+
+```{r, include=FALSE}
+## Make sure to set up the current directory
+setwd("~/C - Research/apa-word-docx-in-rmarkdown")
+```
+
+```{r, include = FALSE}
+pacman::p_load(tidyverse, reticulate, knitr, broom)
+use_condaenv(' C:\\Users\\seanm\\Anaconda3\\python.exe')
+pv <- function(val) {
+  if(val<0.001){
+    pval <- "< .001"
+  } else {
+    pval <- paste( "=", sub("^(-?)0.", "\\1.", sprintf("%.3f", val)))
+  }
+  return(pval)
+}
+```
+
+```{python}
+import pandas as pd
+```
+
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+
+# Title
+
+<br>
+
+# Sean H. Merritt^1^ & Author Two^2^
+
+# Claremont Graduate Univiersity^1^
+
+# University Two^2^
+
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+
+# Author Note
+
+#### Correspondence should be sent to Sean Merritt, Claremont Graduate University, 150 E 10th St, Claremont, CA 91711 E-mail: sean.merritt@cgu.edu
+
+
+
+
+
+
+
+###### Abstract
+
+#### *R* is a free (libre) programming language and software environment for statistical computing and graphics that is supported by the R Foundation for Statistical Computing [@RCoreTeam2019]. The R language is widely used among statisticians and data miners for developing statistical software and data analysis. Polls, surveys of data miners, and studies of scholarly literature databases show that R's popularity has increased substantially in recent years. R is a GNU package. The source code for the R software environment is written primarily in C, Fortran, and R. R is freely available under the GNU General Public License, and pre-compiled binary versions are provided for various operating systems. While R has a command line interface, there are several graphical front-ends available.
+
+
+
+###### Title for intro
+
+Cite just the year for the R Core team [-@RCoreTeam2019]. With blah blahadfasdf afjslf ;jf;lask ldj lsdj l jlkjaldfj ls jlskj j jflkjf ;lkfj a;lfk kaj;fj fjaslkd/fjafjal;fkj ;lfkj ;fj;kljf ;sdfjfdjklsdfk;jlfsjkl;dfsklj;sdfkl jf sklj ;f sdjkl fsd jkl ;sf jkl ;sdaj; lksdjkl ;fjkl; sjlk; sfdljk; s dfjkl; sj
+
+Or cite the authors and the year [@epskamp2020psychometric]. Also with  l;ji sfdjkl; fsjkl ;fsdjkl; sfljk df sjkl fdsjl ;ksdf ajkl; fsl j;sfjlk; fjkl;fds jkl;f sdjlkf jlk; sd fljk;f jkl;f d;jlk fjl;kf djkl;f sdjl;kf jlk;fjkl sfd jlkfsd jlk f sdjkl fd jlkfd ljk;f sdl;jk fsdjl;kf sjkl;f sdjl;kf sdjkl;fsd jlk sdfjlkfsdjlkfjkl; sdkl;.
+
+<br>
+
+## Method
+
+### Participants
+
+### Stimuli
+
+### Analysis
+
+<br>
+
+## Results
+
+Put in your figure by printing out and then use the heading example below.
+
+```{r message=FALSE, warning=FALSE, include=FALSE}
+
+# Example Plot
+df <- read.csv("example.csv")
+p <- ggplot(df, aes(x=speed, y=dist))
+p <- p + geom_point(size=2)
+p <- p + geom_smooth(method="lm", colour="black")
+p <- p + theme_bw()
+p <- p + xlab("Speed") + ylab("Distance")
+p <- p + theme(axis.title = element_text(face="bold", size = 12, color="black"),
+               axis.text = element_text(size = 10, color="black"),
+               panel.background = element_rect(fill = "white", colour = "black"),
+               strip.text = element_text(size = 14, color="black"),
+               strip.background = element_rect(fill = "white", colour = "black"))
+```
+
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+p
+```
+
+#### *Figure 1.* A scatter plot of the *cars* data
+
+```{r include=FALSE}
+## Save figures seperately in plots
+setwd("~/C - Research/1-Folder setup/Outputs/Plots")
+ggsave("plot.png", width = 5, height = 5)
+```
+
+
+```{python}
+data = pd.read_csv(r'C:\Users\seanm\OneDrive\Documents\C - Research\NonVoters\Voter_Predictions\Data and Preperation\CCES data\clean_cces_data.csv')
+```
+
+```{r}
+
+mod <- lm(dist ~ speed, df)
+res <- tidy(mod)
+
+```
+
+
+
+
+<br>
+
+Example reporting ($\beta$ = `r round(res$estimate[2], 2)`, *SE* = `r round(res$std.error[2], 2)`, *t* = `r round(res$statistic[2], 2)`, *p* `r pv(res$p.value[2])`). 
+
+For python: 
+```{r}
+## First convert the python reporting to a r doc
+dat = py$data['voted'][1,]
+## now do the same thing you did for a normal r doc
+```
+
+The first observation is `r dat`
+
+```{r, include = FALSE}
+## To save this the output in a different file use this rmarkdown::render('paper.Rmd', output_file = '~/C - Research/1-Folder setup/Paper Drafts/paper.docx')
+```
+
+
+###### References
